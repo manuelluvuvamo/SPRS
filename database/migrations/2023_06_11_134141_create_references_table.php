@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->double("amount");
             $table->timestamp("end_datetime");
-            $table->unsignedBigInteger("reference_id")->unique()->unsigned();
+            $table->unsignedBigInteger("reference_id")->unsigned();
             $table->unsignedBigInteger('id_entity');
             $table->foreign('id_entity')->references('id')->on('entities')->onDelete('cascade');
             $table->unsignedBigInteger("entity_code")->nullable();

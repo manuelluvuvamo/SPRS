@@ -33,7 +33,7 @@ class ReferenceController extends Controller
                 'amount' => $request->amount,
                 'end_datetime' => $request->end_datetime,
                 'reference_id' => $reference_number,
-                'entity_code' => $entity->entity_code,
+                'entity_code' => $entity->code,
                 'id_entity' => $entity->id,
             ]);
             return response()->json(['message' => 'Reference created', 'reference' => $reference], 200);
@@ -72,7 +72,7 @@ class ReferenceController extends Controller
             $reference = Reference::where('reference_id', $reference_number)->update([
                 'amount' => $request->amount,
                 'end_datetime' => $request->end_datetime,
-                'entity_code' => $entity->entity_code,
+                'entity_code' => $entity->code,
                 'id_entity' => $entity->id,
             ]);
             return response()->json(['message' => 'Reference updated', 'reference' => $reference], 200);
@@ -112,7 +112,7 @@ class ReferenceController extends Controller
         $reference_id = rand(100000000, 999999999); // Gera um número aleatório de 9 dígitos
 
         // Verificar se o código gerado já existe no banco de dados
-        while (Reference::where('reference_id', $reference_id)->exists() || Reference::where('reference_id', $reference_id)->withTrashed()->exists()) {
+        while (Reference::where('reference_id', $reference_id)->where('status','pending')->exists() || Reference::where('reference_id', $reference_id)->withTrashed()->where('status','pending')->exists()) {
             $reference_id = rand(100000000, 999999999); // Gera um novo número aleatório
         }
 

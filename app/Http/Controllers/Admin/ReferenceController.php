@@ -222,7 +222,7 @@ class ReferenceController extends Controller
         $reference_id = rand(100000000, 999999999); // Gera um número aleatório de 9 dígitos
 
         // Verificar se o código gerado já existe no banco de dados
-        while (Reference::where('reference_id', $reference_id)->exists() || Reference::where('reference_id', $reference_id)->withTrashed()->exists()) {
+        while (Reference::where('reference_id', $reference_id)->where('status','pending')->exists() || Reference::where('reference_id', $reference_id)->withTrashed()->where('status','pending')->exists()) {
             $reference_id = rand(100000000, 999999999); // Gera um novo número aleatório
         }
 
