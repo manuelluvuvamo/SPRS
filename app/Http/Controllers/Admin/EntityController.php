@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Events\EntidadeCreated;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -40,12 +41,16 @@ class EntityController extends Controller
     public function index()
     {
 
-        $data["entities"] = Entity::get();
+        $data["entities"] = Entity::join('users','entities.id_user','users.id')
+        ->select('users.name as user', 'users.first_name','users.middle_name', 'users.last_name', 'entities.*')->get();
+        
+      
 
         if (Auth::user()->level != "Administrador") {
             # code...
-            $data["entities"] = Entity::where('id', Auth::user()->id_entity)->get();
+            $data["entities"] = Entity::where('id_user', Auth::user()->id)->get();
         }
+        //dd( $data["entities"]);
         return view('admin.entity.index', $data);
 
     }
@@ -58,8 +63,8 @@ class EntityController extends Controller
     public function create()
     {
         //
-
-        return view('admin.entity.create.index');
+        $data["users"] = User::get();
+        return view('admin.entity.create.index', $data);
     }
 
     /**
@@ -108,6 +113,7 @@ class EntityController extends Controller
                     'image' => $upload,
                     'api_token' => Str::random(60),
                     'code' => $request->code,
+                    'id_user' => ($request->id_user)?$request->id_user:Auth::user()->id, 
 
                 ]);
                 // Dispare o evento EntidadeCreated
@@ -126,6 +132,8 @@ class EntityController extends Controller
                     'phone_number' => $request->phone_number,
                     'api_token' => Str::random(60),
                     'code' => $request->code,
+                    'id_user' => ($request->id_user)?$request->id_user:Auth::user()->id, 
+
                 ]);
                 // Dispare o evento EntidadeCreated
                 //event(new EntidadeCreated($entity));
@@ -160,7 +168,9 @@ class EntityController extends Controller
     public function edit($id)
     {
         //
-        $data["entity"] = Entity::find($id);
+        $data["entity"] = Entity:: join('users','entities.id_user','users.id')
+        ->select('users.name as user', 'users.first_name','users.middle_name', 'users.last_name', 'entities.*')->where('entities.id',$id)->first();
+        $data["users"] = User::get();
         return view('admin.entity.edit.index', $data);
     }
 
@@ -217,6 +227,8 @@ class EntityController extends Controller
                     'phone_number' => $request->phone_number,
                     'image' => $upload,
                     'code' => $request->code,
+                    'id_user' => ($request->id_user)?$request->id_user:Auth::user()->id, 
+
 
                 ]);
                 $this->loggerData("Editou a entidade de id, nome, nome curto, email, nif, telefone ($emp->id, $emp->name, $emp->short_name, $emp->email, $emp->nif, $emp->phone_number) para ($request->name, $request->short_name, $request->email, $request->nif, $request->phone_number)");
@@ -236,6 +248,8 @@ class EntityController extends Controller
                     'short_name' => $request->short_name,
                     'phone_number' => $request->phone_number,
                     'code' => $request->code,
+                    'id_user' => ($request->id_user)?$request->id_user:Auth::user()->id, 
+
                 ]);
                 $this->loggerData("Editou a entidade de id, nome, nome curto, email, nif, telefone ($emp->id, $emp->name, $emp->short_name, $emp->email, $emp->nif, $emp->phone_number ) para ($request->name, $request->short_name, $request->email, $request->nif, $request->phone_number )");
 

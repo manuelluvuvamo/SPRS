@@ -70,21 +70,24 @@
                                                         class="fas fa-money-bill" aria-hidden="true"></i>
                                                     Pagar</a>
                                                 @endif
-
+                                                @if ($reference->status == 'pending')
                                                     <a class="dropdown-item"
                                                         href="{{ route('admin.reference.edit', $reference->id) }}"><i
                                                             class="fa fa-pencil" aria-hidden="true"></i>
                                                         Editar</a>
+                                                @endif
                                                     <a class="dropdown-item destroy"
                                                         href="{{ route('admin.reference.destroy', $reference->id) }}"><i
                                                             class="fa fa-trash" aria-hidden="true"></i>
                                                         Eliminar</a>
 
-
+                                                    @if (Auth::user()->level == "Administrador")
                                                     <a class="dropdown-item purge"
-                                                        href="{{ route('admin.reference.purge', $reference->id) }}"><i
-                                                            class="fa fa-trash" aria-hidden="true"></i>
-                                                        Purgar</a>
+                                                    href="{{ route('admin.reference.purge', $reference->id) }}"><i
+                                                        class="fa fa-trash" aria-hidden="true"></i>
+                                                    Purgar</a>
+                                                    @endif
+                                                    
 
 
                                                 </div>

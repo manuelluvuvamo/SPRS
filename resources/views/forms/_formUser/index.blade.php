@@ -169,7 +169,7 @@
                         <div class="form-group">
                             <label for="level">{{ __('Nível') }}</label>
                             <select class="form-control @error('level') is-invalid @enderror" name="level"
-                                id="level" required autocomplete="level" onchange="alterarNivel()">
+                                id="level" required autocomplete="level" >
 
 
                                 <option {{ isset($user->level) && $user->level == 'Administrador' ? 'selected' : '' }}
@@ -189,17 +189,17 @@
                             @enderror
                         </div>
                     </div>
-                @else
+                @elseif (Auth::user()->level == 'Entidade')
                     <div class="col-md-4" hidden>
                         <div class="form-group">
                             <label for="level">{{ __('Nível') }}</label>
                             <select class="form-control @error('level') is-invalid @enderror" name="level"
-                                id="level" required autocomplete="level" onchange="alterarNivel()">
+                                id="level" required autocomplete="level" >
 
 
-                                <option {{ isset($user->level) && $user->level == 'Administrador' ? 'selected' : '' }}
+                                {{-- <option {{ isset($user->level) && $user->level == 'Administrador' ? 'selected' : '' }}
                                     value="Administrador">Administrador</option>
-                                </option>
+                                </option> --}}
                                 <option {{ isset($user->level) && $user->level == 'Entidade' ? 'selected' : '' }}
                                     value="Entidade">
                                     Entidade</option>
@@ -215,72 +215,7 @@
                         </div>
                     </div>
                 @endif
-                @if (Auth::user()->level == 'Administrador')
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="id_curso" class="form-label">Entidade *</label>
-                            <select
-                                class="js-example-basic-single form-control @error('id_entity') is-invalid @enderror"
-                                id="id_entity" name="id_entity" value="old('id_entity')" required
-                                {{ isset($user) && $user->level == 'Entidade' ? '' : 'disabled' }}
-                                style="height: 40px!important;">
-
-                                <option value="{{ isset($user) ? $user->id_entity : '0' }}"
-                                    {{ isset($func) ? '' : 'selected' }}>
-                                    {{ isset($user) ? $user->vc_entidade : 'Seleccionar entidade' }}
-                                </option>
-
-                                @isset($entities)
-                                    @foreach ($entities as $entity)
-                                        <option value="{{ $entity->id }}" {{ isset($func) ? 'selected' : '' }}>
-                                            {{ $entity->name }}
-                                        </option>
-                                    @endforeach
-                                @endisset
-
-
-
-                            </select>
-                            @error('id_curso')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                @else
-                    <div class="col-md-8">
-                        <div class="form-group">
-                            <label for="id_curso" class="form-label">Entidade *</label>
-                            <select class=" form-control @error('id_entity') is-invalid @enderror" id="id_entity"
-                                name="id_entity" value="old('id_entity')" required
-                                {{ isset($user) && $user->level == 'Entidade' ? 'readonly' : '' }}
-                                style="height: 40px!important;" readonly>
-
-                                <option value="{{ isset($user) ? $user->id_entity : '0' }}"
-                                    {{ isset($func) ? '' : 'selected' }}>
-                                    {{ isset($user) ? $user->vc_entidade : 'Seleccionar entidade' }}
-                                </option>
-
-                                @isset($entities)
-                                    @foreach ($entities as $entity)
-                                        <option value="{{ $entity->id }}" {{ isset($func) ? 'selected' : '' }}>
-                                            {{ $entity->name }}
-                                        </option>
-                                    @endforeach
-                                @endisset
-
-
-
-                            </select>
-                            @error('id_curso')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                @endif
+               
                 <br><br><br><br>
                 <div class="col-md-12">
                     <label for="upload">Foto de Perfil</label><br>

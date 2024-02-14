@@ -39,7 +39,7 @@ class User extends Authenticatable
         'first_name',
         'middle_name',
         'last_name',
-        'id_entity',
+        /* 'id_entity', */
     ];
 
     /**
@@ -73,4 +73,9 @@ class User extends Authenticatable
     ];
 
     protected $dates = ['deleted_at'];
+
+    public function entities()
+    {
+        return $this->hasMany(Entity::class);
+    }
 }

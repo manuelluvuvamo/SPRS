@@ -91,7 +91,24 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image" style="background-image: url('startbootstrap/img/logo.png');background-repeat: no-repeat; background-size: 85% 35%;"></div>
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image" style="background-image: url('startbootstrap/img/mcx.png');background-repeat: no-repeat; background-size: 85% 35%;">
+                            
+                                <div class="col-lg-12">
+                                    <div class="p-5">
+                                        <div class="text-center">
+                                            <h1 class="h4 text-gray-900 mb-4">Sistema de Pagamento Por Referência Simulado</h1>
+                                        </div>
+                                        
+                                        <hr>
+                                       {{--  <div class="text-center">
+                                            <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                        </div> --}}
+                                        {{-- <div class="text-center">
+                                            <a class="small" href="register.html">Create an Account!</a>
+                                        </div> --}}
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">

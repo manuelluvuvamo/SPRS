@@ -23,6 +23,7 @@ class CreateEntitiesTable extends Migration
             $table->string('image')->nullable();
             $table->string('api_token', 60)->unique();
             $table->integer('code')->unique()->unsigned()->nullable();
+            $table->foreignId('id_user')->constrained("users")->onDelete('CASCADE')->onUpdate('CASCADE');
             $table->softDeletes();
             $table->timestamps();
         });

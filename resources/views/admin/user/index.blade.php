@@ -39,7 +39,7 @@
                                 <th>EMAIL</th>
                                 <th>GÊNERO</th>
                                 <th>TELEFONE</th>
-                                <th>EMPRESA</th>
+                                {{-- <th>EMPRESA</th> --}}
                                 <th>FOTO</th>
                                 <th>ACÇÕES</th>
                             </tr>
@@ -57,7 +57,7 @@
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->genero }}</td>
                                         <td>{{ $user->phone_number }}</td>
-                                        <td>{{ $user->vc_empresa }}</td>
+                                        {{-- <td>{{ $user->vc_empresa }}</td> --}}
                                        
                                         <td>
                                             <a class="fresco" href="{{ asset($user->profile_photo_path) }}"

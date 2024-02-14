@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Entidade;
+use App\Models\Entity;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserStoreRequest;
 use Illuminate\Validation\Rules;
@@ -39,16 +40,11 @@ class UserController extends Controller
     public function index()
     {
         //
-        $data['users'] = User::leftjoin('entities', 'users.id_entity', 'entities.id')
-            ->select('entities.name as vc_entidade', 'users.*')->get()
-        ;
+        $data['users'] = User::all();
 
         if (Auth::user()->level != "Administrador") {
-            $data['users'] = User::leftjoin('entities', 'users.id_entity', 'entities.id')
-            ->select('entities.name as vc_entidade', 'users.*')
-            ->where('users.id',Auth::user()->id)
-            ->get()
-        ;
+
+            $data['users'] = User::where('id',Auth::user()->id)->get();
 
         }
         $this->loggerData("Listou utilizadores");
@@ -63,8 +59,8 @@ class UserController extends Controller
     public function create()
     {
         //
-        $data['entities']=Entity::all();
-        return view('admin.user.create.index',$data);
+        /* $data['entities']=Entity::all(); */
+        return view('admin.user.create.index');
     }
 
     /**
@@ -114,7 +110,7 @@ class UserController extends Controller
                     'phone_number' => $request->phone_number,
                     'profile_photo_path' => $upload,
                     'password' => Hash::make($request->password),
-                    'id_entity' => ($request->id_entity)?$request->id_entity:null,
+                    /* 'id_entity' => ($request->id_entity)?$request->id_entity:null, */
                 ]);
                 $this->loggerData(" Cadastrou o utilizador " . $request->name . ", id: " . $user->id);
                 return redirect()->back()->with('user.create.success', 1);
@@ -135,7 +131,7 @@ class UserController extends Controller
                     'level' => $request->level,
                     'phone_number' => $request->phone_number,
                     'password' => Hash::make($request->password),
-                    'id_entity' => ($request->id_entity)?$request->id_entity:null,
+                    /* 'id_entity' => ($request->id_entity)?$request->id_entity:null, */
                 ]);
 
                 $this->loggerData(" Cadastrou o utilizador " . $request->name . ", id: " . $user->id);
@@ -169,10 +165,9 @@ class UserController extends Controller
     public function edit($id)
     {
         //
-        $data["user"] = User::leftjoin('entities', 'users.id_entity', 'entities.id')
-            ->select('entities.name as vc_entidade', 'users.*')->where('users.id', $id)->get()->first();
+        $data["user"] = User::where('id', $id)->get()->first();
         $data['edit']=true;
-        $data["entities"] = Entity::all();
+        /* $data["entities"] = Entity::all(); */
         return view('admin.user.edit.index', $data);
     }
 
@@ -276,7 +271,7 @@ class UserController extends Controller
                     'level' => $request->level,
                     'phone_number' => $request->phone_number,
                     'profile_photo_path' => $upload,
-                    'id_entity' => ($request->id_entity)?$request->id_entity:null,
+                    /* 'id_entity' => ($request->id_entity)?$request->id_entity:null, */
                 ]);
 
 
@@ -332,7 +327,7 @@ class UserController extends Controller
                     'email' => $request->email,
                     'level' => $request->level,
                     'phone_number' => $request->phone_number,
-                    'id_entity' => ($request->id_entity)?$request->id_entity:null,
+                    /* 'id_entity' => ($request->id_entity)?$request->id_entity:null, */
 
                 ]);
                 $this->loggerData(" Editou o utilizador  de id, nome, gênero, email, nível, telefone ($u->id, $u->name, $u->gen, $u->email, $u->level, $u->phone_number) para ($request->name, $request->gen, $request->email, $request->level, $request->phone_number)");

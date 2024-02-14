@@ -7,6 +7,7 @@ use App\Models\Entity;
 use App\Models\Payment;
 use App\Models\Reference;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Logger;
 use Illuminate\Support\Facades\Log;
@@ -39,8 +40,11 @@ class ReferenceController extends Controller
     public function index()
     {
 
+        
         $data["references"] = Reference::join('entities', 'references.id_entity', 'entities.id')->select('entities.name', 'entities.code', 'references.*')->get();
-
+        if (Auth::user()->level != "Administrador") {
+            $data["references"] = Reference::join('entities', 'references.id_entity', 'entities.id')->select('entities.name', 'entities.code', 'references.*')->where("entities.id_user", Auth::user()->id)->get();
+        }
         return view('admin.reference.index', $data);
 
     }
@@ -54,6 +58,11 @@ class ReferenceController extends Controller
     {
         //
         $data["entities"] = Entity::all();
+
+        if (Auth::user()->level != "Administrador") {
+            # code...
+            $data["entities"] = Entity::where('id_user', Auth::user()->id)->get();
+        }
         return view('admin.reference.create.index', $data);
     }
 
@@ -125,6 +134,15 @@ class ReferenceController extends Controller
     {
         //
         $data["reference"] = Reference::join('entities', 'references.id_entity', 'entities.id')->select('entities.*', 'references.*')->where('references.id', $id)->first();
+
+        $data["entities"] = Entity::all();
+
+        if (Auth::user()->level != "Administrador") {
+            # code...
+            $data["entities"] = Entity::where('id_user', Auth::user()->id)->get();
+        }
+
+        
         return view('admin.reference.edit.index', $data);
     }
 

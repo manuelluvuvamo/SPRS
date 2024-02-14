@@ -12,9 +12,9 @@
 <body>
     <div class="text-center">
         <p>
-            <img src="startbootstrap/img/logo.png" class="" width="50" height="50">
+            <img src="startbootstrap/img/mcx.png" class="" width="50" height="50">
             <br>
-            <strong>RefPay</strong><br>
+            <strong>Sistema de Pagamentos por Referência Simulado</strong><br>
 
             {{-- <strong style="text-transform: uppercase;">Sistema de Gestão de Bilhética<br>Controle de Acesso e Consumo
                 com<br> RFID<strong><br> --}}

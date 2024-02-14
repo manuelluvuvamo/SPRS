@@ -243,7 +243,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; TekiPass {{date('Y')}}</span>
+                        <span>Copyright &copy; Manuel Luvuvamo {{date('Y')}}</span>
                     </div>
                 </div>
             </footer>

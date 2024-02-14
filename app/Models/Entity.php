@@ -19,9 +19,13 @@ class Entity extends Model
        'image',
        'api_token',
        'code',
+       'id_user',
 
     ];
     protected $dates = ['deleted_at'];
   
-
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

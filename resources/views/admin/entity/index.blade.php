@@ -15,7 +15,7 @@
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Lista de Entidades</h6>
                 <div class="d-flex flex-wrap align-items-start justify-content-md-end mt-2 mt-md-0 gap-2 mb-3">
-                  @if (Auth::user()->level == "Administrador")
+                  @if (Auth::user()->level == "Administrador" || Auth::user()->level == "Entidade")
                   <a class="btn btn-primary" href="{{ route('admin.entity.create') }}">
                     <strong class="text-light text-white">Cadastrar</strong>
                 </a>
@@ -33,12 +33,15 @@
                                 <th>EMAIL</th>
                                 <th>NIF</th>
                                 <th>TELEFONE</th>
-                                @if (Auth::user()->level == "Administrador")
+                                @if (Auth::user()->level == "Administrador" || Auth::user()->level == "Entidade")
                                 <th>API TOKEN</th>
+                                @endif
+                                @if (Auth::user()->level == "Administrador")
+                                <th>Utilizador</th>
                                 @endif
                                 <th>CÓDIGO DE ENTIDADE</th>
                                 <th>FOTO</th>
-                                @if (Auth::user()->level == "Administrador")
+                                @if (Auth::user()->level == "Administrador" || Auth::user()->level == "Entidade")
                                 <th>ACÇÕES</th>
                                 @endif
                             </tr>
@@ -54,8 +57,11 @@
                                         <td>{{ $entity->email }}</td>
                                         <td>{{ $entity->nif }}</td>
                                         <td>{{ $entity->phone_number }}</td>
-                                        @if (Auth::user()->level == "Administrador")
+                                        @if (Auth::user()->level == "Administrador" || (Auth::user()->level == "Entidade" && Auth::user()->id == $entity->id_user))
                                         <td>{{ $entity->api_token }}</td>
+                                        @endif
+                                        @if (Auth::user()->level == "Administrador")
+                                        <td>{{ $entity->first_name." ".$entity->middle_name." ".$entity->last_name }}</td>
                                         @endif
                                         <td>{{$entity->code}}</td>
                                         <td>
@@ -66,7 +72,7 @@
                                         </td>
                                         @csrf
                                         @method('delete')
-                                        @if (Auth::user()->level == "Administrador")
+                                       
                                         <td>
                                             <div class="dropdown">
                                                 <button class="btn btn-dark btn-sm dropdown-toggle" type="button"
@@ -83,15 +89,16 @@
                                                             class="fa fa-trash" aria-hidden="true"></i>
                                                         Eliminar</a>
 
-                                                   
+                                                        @if (Auth::user()->level == "Administrador")
                                                         <a class="dropdown-item purge"
                                                             href="{{ route('admin.entity.purge', $entity->id) }}"><i
                                                                 class="fa fa-trash" aria-hidden="true"></i>
                                                             Purgar</a>
+                                                        @endif
                                                 </div>
                                             </div>
                                         </td>
-                                        @endif
+                                    
                                     </tr>
                                 @endforeach
 

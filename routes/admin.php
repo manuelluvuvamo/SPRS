@@ -43,11 +43,11 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['entity'])->prefix('entity')->namespace('Admin')->group(
         function () {
             route::get('index', ['as' => 'admin.entity.index', 'uses' => 'EntityController@index']);
-            route::get('create', ['as' => 'admin.entity.create', 'uses' => 'EntityController@create'])->middleware(['admin']);
-            route::post('store', ['as' => 'admin.entity.store', 'uses' => 'EntityController@store'])->middleware(['admin']);
-            route::get('edit/{id}', ['as' => 'admin.entity.edit', 'uses' => 'EntityController@edit'])->middleware(['admin']);
-            route::post('update/{id}', ['as' => 'admin.entity.update', 'uses' => 'EntityController@update'])->middleware(['admin']);
-            route::get('destroy/{id}', ['as' => 'admin.entity.destroy', 'uses' => 'EntityController@destroy'])->middleware(['admin']);
+            route::get('create', ['as' => 'admin.entity.create', 'uses' => 'EntityController@create'])->middleware(['entity']);
+            route::post('store', ['as' => 'admin.entity.store', 'uses' => 'EntityController@store'])->middleware(['entity']);
+            route::get('edit/{id}', ['as' => 'admin.entity.edit', 'uses' => 'EntityController@edit'])->middleware(['entity']);
+            route::post('update/{id}', ['as' => 'admin.entity.update', 'uses' => 'EntityController@update'])->middleware(['entity']);
+            route::get('destroy/{id}', ['as' => 'admin.entity.destroy', 'uses' => 'EntityController@destroy'])->middleware(['entity']);
             route::get('purge/{id}', ['as' => 'admin.entity.purge', 'uses' => 'EntityController@purge'])->middleware(['admin']);
 
         }
@@ -55,10 +55,8 @@ Route::middleware(['auth'])->group(function () {
     /* END ENTITY */
 
 
-   
-
     /* START REFERENCE */
-    Route::middleware(['admin'])->prefix('reference')->namespace('Admin')->group(
+    Route::middleware(['entity'])->prefix('reference')->namespace('Admin')->group(
         function () {
             route::get('index', ['as' => 'admin.reference.index', 'uses' => 'ReferenceController@index']);
             route::get('create', ['as' => 'admin.reference.create', 'uses' => 'ReferenceController@create']);
@@ -66,14 +64,14 @@ Route::middleware(['auth'])->group(function () {
             route::get('edit/{id}', ['as' => 'admin.reference.edit', 'uses' => 'ReferenceController@edit']);
             route::post('update/{id}', ['as' => 'admin.reference.update', 'uses' => 'ReferenceController@update']);
             route::get('destroy/{id}', ['as' => 'admin.reference.destroy', 'uses' => 'ReferenceController@destroy']);
-            route::get('purge/{id}', ['as' => 'admin.reference.purge', 'uses' => 'ReferenceController@purge']);
+            route::get('purge/{id}', ['as' => 'admin.reference.purge', 'uses' => 'ReferenceController@purge'])->middleware(['admin']);
             route::get('pay/{id}', ['as' => 'admin.reference.pay', 'uses' => 'ReferenceController@pay']);
         }
     );
     /* END REFERENCE */
 
      /* START PAYMENT */
-     Route::middleware(['admin'])->prefix('payment')->namespace('Admin')->group(
+     Route::middleware(['entity'])->prefix('payment')->namespace('Admin')->group(
         function () {
             route::get('index', ['as' => 'admin.payment.index', 'uses' => 'PaymentController@index']);
             route::get('index2', ['as' => 'admin.payment.index2', 'uses' => 'PaymentController@index2']);

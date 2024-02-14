@@ -4,9 +4,9 @@
      <!-- Sidebar - Brand -->
      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('/') }}">
          <div class="sidebar-brand-icon ">
-             <img src="{{ asset('startbootstrap/img/logo.png') }}" alt="" width="50">
+             <img src="{{ asset('startbootstrap/img/mcx.png') }}" alt="" width="140">
          </div>
-         <div class="sidebar-brand-text mx-3">RefPay</div>
+         <div class="sidebar-brand-text mx-3">SPRS</div>
      </a>
 
      <!-- Divider -->

@@ -26,10 +26,10 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => "tekipass",
-            'first_name' => "Teki",
-            'last_name' => "Pass",
-            'email' => "tekipass36@gmail.com",
+            'name' => "manuelluvuvamo",
+            'first_name' => "Manuel",
+            'last_name' => "Luvuvamo",
+            'email' => "manuelluvuvamo337@gmail.com",
             'email_verified_at' => now(),
             'password' => Hash::make('12345678'),
             'level' =>'Administrador',
